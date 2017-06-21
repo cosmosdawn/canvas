@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width" />
+    <style>
+        #ca{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+        <div>this is a canvas</div>
+        <canvas width="600px" height="200px" id="ca">hey you yes you update you browser!</canvas>
+        <form action="">
+            <p>
+                <label for="backgroundColor">Select background color:</label>
+                <select name="" id="backgroundColor">
+                    <option value="white" selected="selected">White</option>
+                    <option value="black">Black</option>
+                    <option value="lightblue">LightBlue</option>
+                    <option value="red">Red</option>
+                    <option value="silver">Silver</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="green">Green</option>
+                    <option value="blue">Blue</option>
+                </select>
+            </p>
+            <p>
+                <label for="shape">Circle or squares?</label>
+                <select name="" id="shape">
+                    <option value="none" selected="selected">Neither</option>
+                    <option value="circles">Circles</option>
+                    <option value="squares">Squares</option>
+                </select>
+            </p>
+            <p>
+                <label for="foregroundColor">Select text color:</label>
+                <select name="" id="">
+                    <option value="black" selected="selected">Black</option>
+                    <option value="white">White</option>
+                </select>
+            </p>
+            <p>
+                <label for="tweets">Pick a tweet:</label>
+                <select name="" id="tweets"></select>
+            </p>
+            <p>
+                <input type="button" id="previewButton" value="Preview" />
+            </p>
+        </form>
+</body>
+<script>
+    window.onload = function () {
+        var button = document.getElementById('previewButton');
+        button.onclick = previewHandler;          //  为这个按钮添加一个点击处理程序，这样当点击这个按钮的时候，（或者在移动设备上触摸这个按钮时），就会调用函数。
+        function previewHandler() {                                         //  预览
+            var canvas = document.getElementById('ca');   //  画布
+            var context = canvas.getContext('2d');
+            fillBackgroundColor(canvas,context);
+
+            var selectObj = document.getElementById('shape');
+            var index = selectObj.selectedIndex;
+            var shape = selectObj[index].value;
+
+            if(shape == 'squares'){
+                for(var squares =0;squares<20;squares++){     //  如果shape的值是squares就画一些方块儿，画20个吧。
+                    drawSquares(canvas,context);              //  具体的绘制函数，将画布和上下文传递给这个函数。
+                }
+            }else{
+                for(var circle =0;circle<20;circle++){
+                    drawCircle(canvas,context);
+                }
+            }
+        }
+        function fillBackgroundColor(canvas,context) {
+            var selectObj = document.getElementById('backgroundColor');
+            var index = selectObj.selectedIndex;
+            var bgColor = selectObj[index].value;
+            context.fillStyle = bgColor;
+            context.fillRect(0,0,bgColor,bgColor);
+
+        }
+        function drawCircle(canvas,context) {
+            context.beginPath();
+            context.arc(150,150,50,0,2*Math.PI,true);
+        }
+        function drawSquares(canvas,context) {
+            var w = Math.floor(Math.random()*40);
+            var x = Math.floor(Math.random()*canvas.width);
+            var y = Math.floor(Math.random()*canvas.height);
+            context.fillStyle = 'lighblue';
+            context.fillRect(x,y,w,w);
+        }
+    }
+</script>
+</html>
